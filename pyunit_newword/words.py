@@ -21,6 +21,8 @@ class NewWords:
         self.vocab = {}
         self.max_split = max_split
         self.all_words_len = 0
+        self.cond = filter_cond
+        self.free = filter_free
 
     def add_text(self, file, encoding='UTF-8'):
         """读取文本数据内容
@@ -47,22 +49,22 @@ class NewWords:
                                     w[0] += 1
                                     w[1] = w[0] / self.all_words_len
                                     if i != 0:
-                                        w[2].append(words[i - 1])
+                                        w[2].add(words[i - 1])
                                     if i + j != lens:
-                                        w[3].append(words[i + j])
+                                        w[3].add(words[i + j])
                                 else:
                                     if i == 0:
                                         if len(k) == lens:
-                                            self.vocab[k] = [1, 1 / self.all_words_len, [], []]
+                                            self.vocab[k] = [1, 1 / self.all_words_len, set(), set()]
                                         else:
-                                            self.vocab[k] = [1, 1 / self.all_words_len, [], [words[i + j]]]
+                                            self.vocab[k] = [1, 1 / self.all_words_len, set(), {words[i + j]}]
                                     elif i + j == lens:
                                         if len(k) == lens:
-                                            self.vocab[k] = [1, 1 / self.all_words_len, [], []]
+                                            self.vocab[k] = [1, 1 / self.all_words_len, set(), set()]
                                         else:
-                                            self.vocab[k] = [1, 1 / self.all_words_len, [words[i - 1]], []]
+                                            self.vocab[k] = [1, 1 / self.all_words_len, {words[i - 1]}, set()]
                                     else:
-                                        self.vocab[k] = [1, 1 / self.all_words_len, [words[i - 1]], [words[i + j]]]
+                                        self.vocab[k] = [1, 1 / self.all_words_len, {words[i - 1]}, {words[i + j]}]
 
     def analysis_data(self):
         """分析文本数据
@@ -81,7 +83,7 @@ class NewWords:
                     front_all -= math.log2(self.vocab[front][1]) * self.vocab[front][1]  # 左邻字集合自由程度
                 for end in attribute[3]:
                     end_all -= math.log2(self.vocab[end][1]) * self.vocab[end][1]  # 右邻字集合自由程度
-                attribute.append(sum(solid) / len(solid))
+                attribute.append(min(solid))
                 attribute.append(min(end_all, front_all))
 
     def _filter_algorithm(self, x):
@@ -95,11 +97,11 @@ class NewWords:
         if len(x[0]) == 1:
             return False
         attribute: list = x[1]
-        if attribute[0] > 50 and attribute[-2] > 100 and attribute[-1] > 2:
+        if abs(len(attribute[2]) - len(attribute[3])) <= 5 and attribute[-1] > 0.1 and attribute[-2] > 100:
             return True
         return False
 
     def get_words(self):
         """新词筛选"""
         clean_text = filter(self._filter_algorithm, self.vocab.items())
-        return sorted(dict(clean_text).items(), key=lambda x: x[1][0], reverse=True)
+        return clean_text

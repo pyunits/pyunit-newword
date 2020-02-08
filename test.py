@@ -7,7 +7,7 @@ from pyunit_newword import NewWords
 
 def test():
     """测试"""
-    nw = NewWords()
+    nw = NewWords(max_split=7)
     nw.add_text(r'C:\Users\Administrator\Desktop\西游记.txt')
     nw.analysis_data()
     for word in nw.get_words():
