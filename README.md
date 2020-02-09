@@ -24,13 +24,13 @@ if __name__ == '__main__':
 ```
 
 ## 爬虫的微博数据一部分截图（大概100M纯文本）
-![](./img/weibo.png)
-       
+![微博数据](./img/weibo.png)
+
 ## 训练微博数据后的结果
 ![5个词语](./img/5.png)
 
 ### 训练后得到的词语视频
-<iframe height=498 width=510 src='http://player.youku.com/embed/XNDUzODYzNzM1Mg==' frameborder=0 'allowfullscreen'></iframe>
+[![词语视频](./img/5.png)](https://youtu.be/6PSM4dMArGo "Everything Is AWESOME")
 
 ***
 [1]: https://blog.jtyoui.com
