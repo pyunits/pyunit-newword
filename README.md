@@ -30,7 +30,7 @@ if __name__ == '__main__':
 ![5个词语](./img/5.png)
 
 ### 训练后得到的词语视频
-![](./img/result.gif)
+<iframe height=498 width=510 src='http://player.youku.com/embed/XNDUzODYzNzM1Mg==' frameborder=0 'allowfullscreen'></iframe>
 
 ***
 [1]: https://blog.jtyoui.com
