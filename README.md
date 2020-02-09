@@ -35,5 +35,8 @@ if __name__ == '__main__':
 ### 训练后得到的词语视频
 [![词语视频](./img/5.png)](https://youtu.be/6PSM4dMArGo "YouTube视频")
 
+### 算法实现来源
+[基于改进互信息和邻接熵的微博新词发现方法](http://xueshu.baidu.com/usercenter/paper/show?paperid=b31a76cd03eebaaa598faa3f904770b8)
+
 ***
 [1]: https://blog.jtyoui.com
