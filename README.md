@@ -23,6 +23,9 @@ if __name__ == '__main__':
             f.write(word[0] + '\n')
 ```
 
+## 微博数据下载
+[点击下载微博数据](http://cdn.tyoui.cn/微博数据.7z)
+
 ## 爬虫的微博数据一部分截图（大概100M纯文本）
 ![微博数据](./img/weibo.png)
 
@@ -30,7 +33,7 @@ if __name__ == '__main__':
 ![5个词语](./img/5.png)
 
 ### 训练后得到的词语视频
-[![词语视频](./img/5.png)](https://youtu.be/6PSM4dMArGo "Everything Is AWESOME")
+[![词语视频](./img/5.png)](https://youtu.be/6PSM4dMArGo "YouTube视频")
 
 ***
 [1]: https://blog.jtyoui.com
