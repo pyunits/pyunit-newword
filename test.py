@@ -7,11 +7,11 @@ from pyunit_newword import NewWords
 
 def test():
     """测试"""
-    nw = NewWords(filter_cond=10, filter_free=2)
-    nw.add_text(r'C:\Users\Administrator\Desktop\西游记1.txt')
+    nw = NewWords(accuracy=0.01)
+    nw.add_text(r'C:\Users\Administrator\Desktop\西游记.txt')
     nw.analysis_data()
     for word in nw.get_words():
-        print(word)
+        print(word[0])
 
 
 if __name__ == '__main__':

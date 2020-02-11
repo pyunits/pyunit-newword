@@ -2,24 +2,41 @@
 # -*- coding: utf-8 -*-
 # @Time  : 2018/2/28 10:58
 # @Author: Jtyoui@qq.com
+from sklearn.linear_model import LinearRegression
+import numpy as np
 from tqdm import tqdm
 import re
 import math
+import os
 
 
 class NewWords:
-    def __init__(self, max_split=5, filter_cond=None, filter_free=None):
+    def __init__(self, max_split=5, accuracy=0.1, filter_cond=None, filter_free=None):
         """初始化
 
+        当filter_cond=filter_free=None时，会启动预加载模型\n
+        0 < accuracy 越小识别的词语越精确，但是生成词语越少
+
         :param max_split: 最大候选词长度,限制长度为 n-gram
+        :param accuracy: 自动寻找候选词和模型的精准度之差，默认是设置：0.1
         :param filter_cond: 过滤凝聚度，默认None为自动寻找
         :param filter_free: 过滤自由度，默认None为自动寻找
         """
         self.vocab = {}
         self.max_split = max_split
+        self.accuracy = accuracy
         self.all_words_len = 0
         self.cond = filter_cond
         self.free = filter_free
+        self.auto = None
+        if not (filter_free and filter_free):
+            txt = os.path.dirname(__file__) + os.sep + 'auto.txt'
+            d = [data.strip().split('\t') for data in open(txt, 'r', encoding='utf-8').readlines()]
+            data = np.array(d, dtype=np.float32)
+            x = data[:, :-1]
+            y = data[:, -1:]
+            self.auto = LinearRegression()
+            self.auto.fit(x, y)
 
     def add_text(self, file, encoding='UTF-8'):
         """读取文本数据内容
@@ -93,6 +110,11 @@ class NewWords:
             return True
         elif attribute[0] > 100 and len(attribute[2]) >= attribute[0] * 0.1 and len(attribute[3]) >= attribute[0] * 0.1:
             return True
+        if not (self.free and self.cond):
+            ls = [attribute[0], attribute[1], len(attribute[2]), len(attribute[3]), attribute[4]]
+            predict = self.auto.predict([ls])[0][0]
+            if 0 < attribute[5] - predict <= self.accuracy and predict > 0:
+                return True
         elif attribute[4] >= self.cond and attribute[5] >= self.free:
             return True
         return False
