@@ -55,5 +55,9 @@ if __name__ == '__main__':
 ### 算法实现来源
 [基于改进互信息和邻接熵的微博新词发现方法](http://xueshu.baidu.com/usercenter/paper/show?paperid=b31a76cd03eebaaa598faa3f904770b8)
 
+# TODO
+- [x] ~~自动寻找过滤参数~~
+- [ ] 参数自动寻找最优解
+
 ***
 [1]: https://blog.jtyoui.com
